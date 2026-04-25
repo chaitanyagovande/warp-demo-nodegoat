@@ -26,6 +26,8 @@ test/e2e/videos/
 # ignore sensitive files
 .env.local
 .env
+.mise.local.toml
+mise.local.toml
 
 # ignore Snyk Code scanner files
 .dccache
