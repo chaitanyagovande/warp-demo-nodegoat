@@ -1,0 +1,18 @@
+[tools]
+node = '20'       # For your NodeGoat app
+gh = 'latest'     # GitHub CLI for PRs
+trivy = 'latest'  # Security scanner
+
+[env]
+# Useful for local testing of your Slack integration
+SLACK_WEBHOOK_URL = "{{SLACK_WEBHOOK_URL}}"
+[tasks.sentinel-local]
+description = "Run Security Sentinel locally with fast-mode limits"
+env.SENTINEL_LOCAL_FAST = "1"
+env.SENTINEL_TRIVY_TIMEOUT = "90s"
+env.SENTINEL_SKIP_DIRS = "node_modules,dist,.git,coverage,vendor"
+env.SENTINEL_MAX_TRIAGE = "20"
+env.SENTINEL_REACHABILITY_PATHS = "src app lib services"
+env.SENTINEL_SKIP_REMEDIATION = "0"
+env.SENTINEL_TEST_CMD = "npm test"
+run = "oz agent run --skill security-sentinel"
