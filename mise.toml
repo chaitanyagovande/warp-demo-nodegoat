@@ -5,10 +5,9 @@ trivy = 'latest'  # Security scanner
 
 [env]
 # Useful for local testing of your Slack integration
-SLACK_WEBHOOK_URL = "{{SLACK_WEBHOOK_URL}}"
+SLACK_WEBHOOK_URL = { required = true }
 [tasks.sentinel-local]
 description = "Run Security Sentinel locally with fast-mode limits"
-env.SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
 env.SENTINEL_LOCAL_FAST = "1"
 env.SENTINEL_TRIVY_TIMEOUT = "90s"
 env.SENTINEL_SKIP_DIRS = "node_modules,dist,.git,coverage,vendor"

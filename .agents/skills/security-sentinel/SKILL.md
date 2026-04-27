@@ -10,7 +10,7 @@ Use this skill to perform an autonomous security audit on the current repository
 
 ## Instructions
 1. **Scan for pre-requisites**
-    - Check to see trivy, gh, semgrep, curl are installed and can be run.
+    - Check to see trivy, gh, curl are installed and can be run.
 2. **Load mode/config from environment variables**
     - Read these variables (with defaults) before running:
         - `SENTINEL_LOCAL_FAST` (default `0`) — enables local fast mode when set to `1`.
@@ -47,14 +47,13 @@ Use this skill to perform an autonomous security audit on the current repository
     - Otherwise, for reachable risks, attempt to update the package: `npm install [package]@latest`.
     - Then run tests using `${SENTINEL_TEST_CMD:-npm test}`.
 7. **Reporting & Notification**
-    - Create PR by using `gh pr create --title "Security: Patch reachable [package] vulnerability" --body "Automated patch by Oz Sentinel."`
-    - Post a summary to Slack: "Sentinel Report: Found 5 vulns, 2 reachable. Patched 2 and opened PRs. 3 triaged as unreachable."
-        - If it is being run locally (`SENTINEL_LOCAL_FAST=1`) and `SLACK_WEBHOOK_URL` is set, run:
-            ```bash
-            curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"🚀 *Security Sentinel Report*\\nFound ${VULN_COUNT} vulnerabilities. Triaged ${REACHABLE_COUNT} as reachable. Check PRs for fixes.\"}" \
-            "$SLACK_WEBHOOK_URL"
-            ```
+    - Regardless of the remediation step, create PR by using `gh pr create --title "Security: Patch reachable [package] vulnerability" --body "Automated patch by Oz Sentinel."`
+    - Regardless of the remediation step, post a summary to Slack if it is being run locally (`SENTINEL_LOCAL_FAST=1`) using the following command:
+        ```bash
+        curl -X POST -H 'Content-type: application/json' \
+        --data "{\"text\":\"🚀 *Security Sentinel Report*\\nFound ${VULN_COUNT} vulnerabilities. Triaged ${REACHABLE_COUNT} as reachable. Check PRs for fixes.\"}" \
+        "$SLACK_WEBHOOK_URL"
+        ```
 
 ## Important notes
 - Requires `trivy` and `gh` (GitHub CLI) to be installed in the Oz environment.
