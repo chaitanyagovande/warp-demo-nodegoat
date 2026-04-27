@@ -47,7 +47,7 @@ Use this skill to perform an autonomous security audit on the current repository
     - Otherwise, for reachable risks, attempt to update the package: `npm install [package]@latest`.
     - Then run tests using `${SENTINEL_TEST_CMD:-npm test}`.
 7. **Reporting & Notification**
-    - If tests pass, use `gh pr create --title "Security: Patch reachable [package] vulnerability" --body "Automated patch by Oz Sentinel."`
+    - Create PR by using `gh pr create --title "Security: Patch reachable [package] vulnerability" --body "Automated patch by Oz Sentinel."`
     - Post a summary to Slack: "Sentinel Report: Found 5 vulns, 2 reachable. Patched 2 and opened PRs. 3 triaged as unreachable."
         - If it is being run locally (`SENTINEL_LOCAL_FAST=1`) and `SLACK_WEBHOOK_URL` is set, run:
             ```bash
