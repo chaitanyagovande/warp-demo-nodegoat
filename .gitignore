@@ -37,3 +37,11 @@ mise.local.toml
 .jfrog/
 frogbot
 run_frogbot.sh
+
+# Other ignores
+
+docs/
+package-lock*
+*.bak
+report*
+triage*
