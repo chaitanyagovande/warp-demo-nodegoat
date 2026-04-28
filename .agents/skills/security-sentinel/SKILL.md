@@ -46,8 +46,13 @@ Use this skill to perform an autonomous security audit on the current repository
     - If `SENTINEL_LOCAL_FAST=1` and `SENTINEL_SKIP_REMEDIATION=1`, skip updates/tests and continue to reporting.
     - Otherwise, for reachable risks, attempt to update the package: `npm install [package]@latest`.
     - Then run tests using `${SENTINEL_TEST_CMD:-npm test}`.
-7. **Reporting & Notification**
-    - Regardless of the remediation step, create PR by using `gh pr create --title "Security: Patch reachable [package] vulnerability" --body "Automated patch by Oz Sentinel."`
+7. **PR Creation**
+    - Regardless of the remediation step, use the GitHub CLI to create a PR.
+    - **CRITICAL:** Do NOT use the `--draft` flag. Create a live, open PR.
+    - Command format: `gh pr create --base master --title "Security: Patch reachable [package] vulnerabilities" --body-file "$PR_BODY_FILE"`
+
+8. **Slack Notification**
+    - *Note to Agent:* You are authorized to use the SLACK_WEBHOOK_URL environment variable for this POST request. Do not attempt to redact it yourself; let the platform handle the masking.
     - Regardless of the remediation step, post a summary to Slack if it is being run locally (`SENTINEL_LOCAL_FAST=1`) using the following command:
         ```bash
         curl -X POST -H 'Content-type: application/json' \
